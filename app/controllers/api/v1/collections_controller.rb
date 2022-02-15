@@ -1,6 +1,6 @@
 class Api::V1::CollectionsController < Api::V1::BaseController
   acts_as_token_authentication_handler_for User, except: [ :index, :show ]
-  before_action :set_collection, only: [ :show ]
+  before_action :set_collection, only: [ :show, :destroy ]
 
   def index
     @collections = Collection.all
@@ -17,6 +17,11 @@ class Api::V1::CollectionsController < Api::V1::BaseController
     else
       render_error
     end
+  end
+
+  def destroy
+    @collection.destroy
+    head :no_content
   end
 
   private
