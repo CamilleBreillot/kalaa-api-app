@@ -1,5 +1,5 @@
 class Api::V1::CollectionsController < Api::V1::BaseController
-  acts_as_token_authentication_handler_for User, except: [ :index, :show ]
+  acts_as_token_authentication_handler_for User, except: [ :index, :show, :destroy, :create ]
   before_action :set_collection, only: [ :show, :destroy ]
 
   def index
@@ -11,7 +11,7 @@ class Api::V1::CollectionsController < Api::V1::BaseController
 
   def create
     @collection = Collection.new(collection_params)
-    @collection.user = current_user
+    @collection.user = User.first
     if @collection.save
       render :show, status: :created
     else
@@ -30,7 +30,7 @@ class Api::V1::CollectionsController < Api::V1::BaseController
     end
 
     def collection_params
-      params.require(:collection).permit(:name, :date, :asso)
+      params.require(:collection).permit(:name, :date, :asso, :indicators_attributes => [:id, :name, :value])
     end
 
     def render_error

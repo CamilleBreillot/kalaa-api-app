@@ -5,7 +5,7 @@ Rails.application.routes.draw do
       resources :collections, only: [ :index, :show, :create, :destroy ] do
         resources :indicators, only: [ :create ]
       end
-      resources :indicators, only: [ :index, :show ]
+      resources :indicators, only: [ :index, :show, :create ]
     end
   end
   root to: 'pages#home'

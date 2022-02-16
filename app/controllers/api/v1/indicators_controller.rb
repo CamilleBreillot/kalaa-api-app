@@ -1,4 +1,5 @@
 class Api::V1::IndicatorsController < Api::V1::BaseController
+  acts_as_token_authentication_handler_for User, except: [ :index, :show, :destroy, :create ]
   def index
     @indicators = Indicator.all
   end
@@ -8,9 +9,13 @@ class Api::V1::IndicatorsController < Api::V1::BaseController
   end
 
   def create
-    @indicator = Indicator.new(indicators_params)
-    @collection = Collection.find(params[:collection_id])
-    @indicator.collection = @collection
+    if params[:collection_id]
+      @indicator = Indicator.new(indicators_params)
+      @collection = Collection.find(params[:collection_id])
+      @indicator.collection = @collection
+    else
+      @indicator = Indicator.new(indicators_params)
+    end
     if @indicator.save
       render :show, status: :created # see if need to redirect to
     else
