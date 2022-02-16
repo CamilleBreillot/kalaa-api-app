@@ -1,5 +1,5 @@
 class Indicator < ApplicationRecord
-  belongs_to :collection, optional: true
+  belongs_to :collection
 
   validates :name, presence: true
 end
