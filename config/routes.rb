@@ -6,6 +6,7 @@ Rails.application.routes.draw do
         resources :indicators, only: [ :create ]
       end
       resources :indicators, only: [ :index, :show, :create ]
+      resources :fields, only: [ :index, :show, :create, :destroy ]
     end
   end
   root to: 'pages#home'

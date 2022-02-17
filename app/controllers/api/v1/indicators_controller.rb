@@ -30,7 +30,7 @@ class Api::V1::IndicatorsController < Api::V1::BaseController
     end
 
     def render_error
-      render json: { errors: @collection.errors.full_messages },
+      render json: { errors: @indicator.errors.full_messages },
         status: :unprocessable_entity
     end
 end
